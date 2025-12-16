@@ -1,23 +1,28 @@
-name: Python Test Pipeline
+name: CI/CD Pipeline
 
 on: [push]
 
 jobs:
+  # JOB 1: THE TASTE TEST (CI)
   test-app:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Get the code
       - uses: actions/checkout@v3
-
-      # Step 2: Set up Python
       - uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-
-      # Step 3: Install a testing tool (pytest)
       - name: Install Pytest
         run: pip install pytest
-
-      # Step 4: Run the actual test file
       - name: Run Tests
         run: pytest
+
+  # JOB 2: THE DELIVERY TRUCK (CD)
+  deploy-app:
+    runs-on: ubuntu-latest
+    # IMPORTANT: This line creates the dependency!
+    # It says: "Wait for test-app to finish successfully."
+    needs: test-app
+    
+    steps:
+      - name: Deploy to Production
+        run: echo "🚀 Deploying to Production Server... Success!"

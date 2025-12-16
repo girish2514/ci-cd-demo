@@ -1,0 +1,24 @@
+YAML
+
+name: My First Pipeline
+
+# Trigger: When should this run?
+on: [push]
+
+# The actual work to do
+jobs:
+  build-and-test:
+    # We need a computer to run this. GitHub provides one for free!
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Check out the code (so the robot can see it)
+      - uses: actions/checkout@v3
+      
+      # Step 2: Run a simple command
+      - name: Say Hello
+        run: echo "Hello! I am a pipeline and I am working!"
+        
+      # Step 3: Check Python version (just to prove we are on a real server)
+      - name: Check Python Version
+        run: python --version

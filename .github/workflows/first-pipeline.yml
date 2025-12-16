@@ -1,11 +1,23 @@
-name: First Pipeline
+name: Python Test Pipeline
 
 on: [push]
 
 jobs:
-  test-job:
+  test-app:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Get the code
       - uses: actions/checkout@v3
-      - name: Say Hello
-        run: echo "Hello World"
+
+      # Step 2: Set up Python
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      # Step 3: Install a testing tool (pytest)
+      - name: Install Pytest
+        run: pip install pytest
+
+      # Step 4: Run the actual test file
+      - name: Run Tests
+        run: pytest
